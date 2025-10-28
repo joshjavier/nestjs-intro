@@ -1,0 +1,6 @@
+name: delete a task
+method: DELETE
+url: http://localhost:3000/tasks/:id
+path_params:
+- name: id
+  value: f7bfb684-bcb0-4195-ae3e-cc7e560f4538

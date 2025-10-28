@@ -1,0 +1,15 @@
+name: update task status
+method: PATCH
+url: http://localhost:3000/tasks/:id/status
+body:
+  content: |-
+    {
+      "status": "XXX"
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+path_params:
+- name: id
+  value: 6404e0a1-c51f-4528-86b4-bb8e6fc5284

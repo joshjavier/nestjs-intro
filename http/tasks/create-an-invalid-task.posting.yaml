@@ -1,0 +1,14 @@
+name: create an invalid task
+method: POST
+url: http://localhost:3000/tasks
+body:
+  content: |-
+    {
+      "title": "Learn NestJS",
+      "description": "Complete the NestJS course",
+      "status": "XXX"
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json

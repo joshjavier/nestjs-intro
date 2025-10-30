@@ -1,2 +1,5 @@
 name: get task by id
-url: http://localhost:3000/tasks/123
+url: http://localhost:3000/tasks/:id
+path_params:
+- name: id
+  value: 4d450375-8c61-4710-b55b-f4fc7137100e

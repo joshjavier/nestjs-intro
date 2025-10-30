@@ -12,32 +12,37 @@ import {
   Post,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import type { ITask } from './task.model';
 import { CreateTaskDto } from './create-task.dto';
 import { FindOneParams } from './find-one.params';
 import { UpdateTaskDto } from './update-task.dto';
 import { WrongTaskStatusException } from './exceptions/wrong-task-status.exception';
+import { Task } from './task.entity';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  public findAll(): ITask[] {
+  public async findAll(): Promise<Task[]> {
     return this.tasksService.findAll();
   }
 
   @Get(':id')
-  public findOne(@Param() params: FindOneParams): ITask {
+  public async findOne(@Param() params: FindOneParams): Promise<Task> {
     return this.findOneOrFail(params.id);
   }
 
+  @Post()
+  public async create(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksService.createTask(createTaskDto);
+  }
+
   @Patch(':id')
-  public updateTask(
+  public async updateTask(
     @Param() params: FindOneParams,
     @Body() updateTaskDto: UpdateTaskDto,
-  ): ITask {
-    const task = this.findOneOrFail(params.id);
+  ): Promise<Task> {
+    const task = await this.findOneOrFail(params.id);
     try {
       return this.tasksService.updateTask(task, updateTaskDto);
     } catch (error) {
@@ -60,18 +65,13 @@ export class TasksController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public deleteTask(@Param() params: FindOneParams): void {
-    const task = this.findOneOrFail(params.id);
-    this.tasksService.deleteTask(task);
+  public async deleteTask(@Param() params: FindOneParams): Promise<void> {
+    const task = await this.findOneOrFail(params.id);
+    await this.tasksService.deleteTask(task);
   }
 
-  @Post()
-  public create(@Body() createTaskDto: CreateTaskDto): ITask {
-    return this.tasksService.create(createTaskDto);
-  }
-
-  private findOneOrFail(id: string): ITask {
-    const task = this.tasksService.findOne(id);
+  private async findOneOrFail(id: string): Promise<Task> {
+    const task = await this.tasksService.findOne(id);
 
     if (!task) {
       throw new NotFoundException();

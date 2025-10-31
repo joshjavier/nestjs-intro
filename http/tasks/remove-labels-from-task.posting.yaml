@@ -1,0 +1,12 @@
+name: remove labels from task
+method: DELETE
+url: http://localhost:3000/tasks/:id/labels
+body:
+  content: '["prioritized","bug"]'
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
+path_params:
+- name: id
+  value: 5d6b1c54-4b61-4ed4-8993-0085fec76db7

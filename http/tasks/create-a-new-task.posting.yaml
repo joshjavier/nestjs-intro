@@ -6,7 +6,13 @@ body:
     {
       "title": "Learn NestJS",
       "description": "Complete the NestJS course",
-      "status": "OPEN"
+      "status": "OPEN",
+      "userId": "d9361d8a-7cc6-49ad-b743-6b1ea0951401",
+      "labels": [
+        {
+          "name": "urgent"
+        }
+      ]
     }
   content_type: application/json
 headers:
